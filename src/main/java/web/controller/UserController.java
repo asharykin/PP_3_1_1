@@ -40,10 +40,12 @@ public class UserController {
     public String updateUser(@RequestParam("userId") int userId, @RequestParam("name") String name,
                              @RequestParam("lastName") String lastName, @RequestParam("age") String age) {
         User user = userService.getUserById(userId);
-        user.setName(name.isEmpty() ? user.getName() : name);
-        user.setLastName(lastName.isEmpty() ? user.getLastName() : lastName);
-        user.setAge(age.isEmpty() ? user.getAge() : Integer.parseInt(age));
-        userService.updateUser(user);
+        if (user != null) {
+            user.setName(name.isEmpty() ? user.getName() : name);
+            user.setLastName(lastName.isEmpty() ? user.getLastName() : lastName);
+            user.setAge(age.isEmpty() ? user.getAge() : Integer.parseInt(age));
+            userService.updateUser(user);
+        }
         return "redirect:/users";
     }
 }
